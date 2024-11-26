@@ -11,12 +11,8 @@ function useTraverseTree() {
             return tree;
         }
 
-        let node = []
-        node = tree.items.map((it) => {
-            return insertNode(it, folderId, item, isFolder);
-        });
-
-        return {...tree, items: node};
+        tree.items = tree.items.map((adjNode) => insertNode(adjNode, folderId, item, isFolder));
+        return tree;
     }
 
     return { insertNode }
