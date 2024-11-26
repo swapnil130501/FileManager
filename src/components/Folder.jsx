@@ -6,16 +6,19 @@ function Folder({ data }) {
 
     if (data.isFolder) {
         return (
-            <div className="folder">
-                <div onClick={() => setExpand(!expand)}>
+            <div>
+                <div className="folder" onClick={() => setExpand(!expand)}>
                     <span>
                         📁 {data.name}
                     </span>
+
+                    <div>
+                        <button className="btn-folder">Folder +</button>
+                        <button className="btn-file">File +</button>
+                    </div>
                 </div>
 
-                <div
-                    className={`folder-items ${expand ? "" : "hidden"}`}
-                >
+                <div style={{ display: expand ? "block" : "none", paddingLeft: 25 }}>
                     {data.items.map((it) => {
                         return (
                             <Folder data={it} key={it.id} />
