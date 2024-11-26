@@ -18,6 +18,13 @@ function Folder({ data }) {
         })
     }
 
+    function handleAddFolder(e) {
+        if(e.keyCode === 13 && e.target.value) {
+            //add logic
+            setShowInput({...showInput, visible: false});
+        }
+    }
+
     if (data.isFolder) {
         return (
             <div>
@@ -39,6 +46,7 @@ function Folder({ data }) {
                                     type='text'
                                     autoFocus
                                     onBlur={() => setShowInput({...showInput, visible: false})}
+                                    onKeyDown={handleAddFolder}
                                 >
                                 </input>
                             </div>
