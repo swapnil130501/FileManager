@@ -1,7 +1,6 @@
 .folder {
     cursor: pointer;
     margin: 5px 0;
-    font-size: 16px;
 }
 
 .file {
@@ -9,4 +8,22 @@
     font-size: 14px;
     display: flex;
     flex-direction: column;
+}
+
+.btn-folder {
+    cursor: pointer;
+    font-size: 12px;
+    background-color: white;
+    margin-left: 10px;
+}
+
+.btn-file {
+    cursor: pointer;
+    font-size: 12px;
+    background-color: white;
+    margin-left: 5px;
+}
+
+.input-box {
+    margin-left: 5px;
 }

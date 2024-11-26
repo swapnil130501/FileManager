@@ -3,6 +3,20 @@ import './Folder.css';
 
 function Folder({ data }) {
     const [expand, setExpand] = useState(false);
+    const [showInput, setShowInput] =  useState({
+        visible: false,
+        isFolder: null
+    });
+
+    function handleNewFolder(e, isFolder) {
+        e.stopPropagation();
+
+        setExpand(true);
+        setShowInput({
+            visible: true,
+            isFolder
+        })
+    }
 
     if (data.isFolder) {
         return (
@@ -12,13 +26,24 @@ function Folder({ data }) {
                         📁 {data.name}
                     </span>
 
-                    <div>
-                        <button className="btn-folder">Folder +</button>
-                        <button className="btn-file">File +</button>
-                    </div>
+                    <button className="btn-folder" onClick={(e) => handleNewFolder(e, true)}>Folder +</button>
+                    <button className="btn-file" onClick={(e) => handleNewFolder(e, false)}>File +</button>
                 </div>
 
                 <div style={{ display: expand ? "block" : "none", paddingLeft: 25 }}>
+                    {
+                        showInput.visible && (
+                            <div className='input-container'>
+                                <span>{showInput.isFolder ? "📁": "📄"}</span>
+                                <input className='input-box' 
+                                    type='text'
+                                    autoFocus
+                                    onBlur={() => setShowInput({...showInput, visible: false})}
+                                >
+                                </input>
+                            </div>
+                        )
+                    }
                     {data.items.map((it) => {
                         return (
                             <Folder data={it} key={it.id} />
