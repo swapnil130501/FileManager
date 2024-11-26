@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Folder.css';
 
-function Folder({ data }) {
+function Folder({ handleInsertNode, data }) {
     const [expand, setExpand] = useState(false);
     const [showInput, setShowInput] =  useState({
         visible: false,
@@ -20,7 +20,7 @@ function Folder({ data }) {
 
     function handleAddFolder(e) {
         if(e.keyCode === 13 && e.target.value) {
-            //add logic
+            handleInsertNode(data.id, e.target.value, showInput.isFolder)
             setShowInput({...showInput, visible: false});
         }
     }
@@ -54,7 +54,7 @@ function Folder({ data }) {
                     }
                     {data.items.map((it) => {
                         return (
-                            <Folder data={it} key={it.id} />
+                            <Folder handleInsertNode = {handleInsertNode} data={it} key={it.id} />
                         );
                     })}
                 </div>
