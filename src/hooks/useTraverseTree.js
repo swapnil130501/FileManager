@@ -15,7 +15,18 @@ function useTraverseTree() {
         return tree;
     }
 
-    return { insertNode }
+    function renameNode(tree, folderId, newName) {
+        if(tree.id === folderId) {
+            tree.name = newName;
+
+            return tree;
+        }
+
+        tree.items = tree.items.map((adjNode) => renameNode(adjNode, folderId, newName));
+        return tree;
+    }
+
+    return { insertNode, renameNode }
 }
 
 export default useTraverseTree;

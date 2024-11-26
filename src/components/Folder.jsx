@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './Folder.css';
 
-function Folder({ handleInsertNode, data }) {
+function Folder({ handleInsertNode, handleRenameNode, data }) {
     const [expand, setExpand] = useState(false);
     const [showInput, setShowInput] =  useState({
         visible: false,
         isFolder: null
     });
+
+    const [editName, setEditName] = useState(false);
+    const [newName, setNewName] = useState(data.name);
 
     function handleNewFolder(e, isFolder) {
         e.stopPropagation();
@@ -25,10 +28,32 @@ function Folder({ handleInsertNode, data }) {
         }
     }
 
+    function handleRename(e) {
+        if(e.keyCode === 13 && newName.trim()) {
+            handleRenameNode(data.id, newName);
+            setEditName(false);
+        }
+    }
+
+    function handleDoubleClick() {
+        setEditName(true);
+    }
+ 
     if (data.isFolder) {
         return (
             <div>
-                <div className="folder" onClick={() => setExpand(!expand)}>
+                <div className="folder" onClick={() => setExpand(!expand)} onDoubleClick={handleDoubleClick}>
+                {editName && (
+                    <input
+                        type="text"
+                        value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        onKeyDown={handleRename}
+                        onBlur={() => setEditName(false)}
+                        autoFocus
+                        className="rename-input"
+                    />
+                )}
                     <span>
                         📁 {data.name}
                     </span>
@@ -54,7 +79,7 @@ function Folder({ handleInsertNode, data }) {
                     }
                     {data.items.map((it) => {
                         return (
-                            <Folder handleInsertNode = {handleInsertNode} data={it} key={it.id} />
+                            <Folder handleInsertNode = {handleInsertNode} handleRenameNode = {handleRenameNode} data={it} key={it.id} />
                         );
                     })}
                 </div>
